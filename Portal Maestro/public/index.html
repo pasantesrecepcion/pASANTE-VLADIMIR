@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Maestro - Farmacorp</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Holographic & Grid Background Elements -->
+    <div class="holo-bg"></div>
+    <div class="hex-grid"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="top-bar">
+            <div class="header-left">
+                <div class="logo-container">
+                    <i class="ph ph-hexagon header-logo-icon"></i>
+                    <h1 class="main-title">FARMACORP <span class="highlight">- PORTAL MAESTRO</span></h1>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="welcome-text">BIENVENIDO, GERENTE</span>
+                    <span class="datetime-display" id="current-datetime">Cargando fecha...</span>
+                </div>
+                <div class="profile-actions">
+                    <div class="profile-icon">
+                        <i class="ph ph-user-circle"></i>
+                    </div>
+                    <button class="logout-btn">
+                        <i class="ph ph-sign-out"></i>
+                        <span>Cerrar sesión</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN GRID -->
+        <main class="grid-container">
+
+            <!-- MOSAICO 1: ACTIVO, COLOR CIAN -->
+            <a href="http://10.170.20.169:3002" class="module-tile active color-cyan">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-truck"></i>
+                        <i class="ph-fill ph-door-open sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">AGENDA DE RECEPCIÓN (B100)</h2>
+                    <p class="tile-status">GESTIÓN DE CITAS & PUERTAS</p>
+                </div>
+                <div class="glow-effect"></div>
+            </a>
+
+            <!-- MOSAICO 2: ACTIVO, COLOR CIAN -->
+            <a href="http://10.170.20.169:3001" class="module-tile active color-cyan">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-chart-bar"></i>
+                        <i class="ph-fill ph-trend-up sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">AVANCE DE RECEPCIÓN</h2>
+                    <p class="tile-status">ESTADO DE CUMPLIMIENTO DIARIO</p>
+                </div>
+                <div class="glow-effect"></div>
+            </a>
+
+            <!-- MOSAICO 3: ACTIVO, COLOR CIAN -->
+            <a href="http://10.170.20.169:3000" class="module-tile active color-cyan">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-users"></i>
+                        <i class="ph-fill ph-gear sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">PRODUCTIVIDAD DE USUARIO</h2>
+                    <p class="tile-status">RENDIMIENTO INDIVIDUAL & GRUPAL</p>
+                </div>
+                <div class="glow-effect"></div>
+            </a>
+
+            <!-- MOSAICO 4: PRÓXIMAMENTE, COLOR VIOLETA -->
+            <div class="module-tile inactive color-violet">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <i class="ph ph-package sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">PROXIMAMENTE</h2>
+                    <p class="tile-status">PRÓXIMAMENTE / EN DESARROLLO</p>
+                </div>
+                <div class="scanline"></div>
+            </div>
+
+            <!-- MOSAICO 5: PRÓXIMAMENTE, COLOR NARANJA -->
+            <div class="module-tile inactive color-orange">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-envelope-simple-open"></i>
+                        <i class="ph-fill ph-warning sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">PROXIMAMENTE</h2>
+                    <p class="tile-status">MÓDULO PRÓXIMAMENTE</p>
+                </div>
+                <div class="scanline"></div>
+            </div>
+
+            <!-- MOSAICO 6: PRÓXIMAMENTE, COLOR VERDE -->
+            <a href="https://script.google.com/macros/s/AKfycby5AICNx0cgcikxmFvAMiOJfTmNb4t-7_bx1UzgxV-QB7zX6cFz061afqDXHdI5MNjW/exec"
+                class="module-tile active color-green">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-package"></i>
+                        <i class="ph-bold ph-lightning sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">CENTRALIZACIÓN B100</h2>
+                    <p class="tile-status">SISTEMA EN LÍNEA / CLOUD</p>
+                </div>
+                <div class="glow-effect"></div>
+                <div class="scanline"></div>
+            </a>
+
+            <!-- MOSAICO 7: PRÓXIMAMENTE, COLOR ROJO -->
+            <div class="module-tile inactive color-red">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-recycle"></i>
+                        <i class="ph-fill ph-truck sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">LOGÍSTICA INVERSA PROXIMAMENTE</h2>
+                    <p class="tile-status">EN DESARROLLO</p>
+                </div>
+                <div class="scanline"></div>
+            </div>
+
+            <!-- MOSAICO 8: CONFIGURADO CON IP PUERTO 3003 -->
+            <a href="http://10.170.20.169:3003" class="module-tile active color-indigo">
+                <div class="tile-content">
+                    <div class="icon-wrapper">
+                        <i class="ph ph-clipboard-text"></i>
+                        <i class="ph-bold ph-check sub-icon"></i>
+                    </div>
+                    <h2 class="tile-title">FORMULARIO RECEPCION</h2>
+                    <p class="tile-status">SISTEMA DE AGENDA E INCIDENCIAS</p>
+                </div>
+                <div class="glow-effect"></div>
+                <div class="scanline"></div>
+            </a>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bottom-bar">
+            <div class="ui-status">
+                <span class="status-dot"></span>
+                PORTAL MAESTRO SYSTEM ONLINE
+            </div>
+            <div class="location-info">
+                CEDIS - SANTA CRUZ DE LA SIERRA, BOLIVIA | <span class="highlight">FARMACORP</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

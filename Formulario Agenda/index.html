@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEDIS B100 | Gestión de Agenda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="provider-mode">
+    <!-- Cyber-3D Background Layer -->
+    <div class="grid-background"></div>
+    <div id="particles-js"></div>
+
+    <!-- Independent Header (Top Surface) -->
+    <header class="header-bar">
+        <div class="main-title">REGISTRO DE AGENDA RECEPCIÓN - CEDIS</div>
+    </header>
+
+    <!-- Top Control Cluster (Detached) -->
+    <div class="header-controls" id="headerControls"
+        style="display:none; position:fixed; top:20px; left:0; right:0; width:100%; padding:0 30px; justify-content:space-between; align-items:center; z-index:10000; pointer-events:none;">
+        <div class="header-left" style="pointer-events:auto; display:flex; align-items:center; gap:15px;">
+            <button id="btnHome" class="home-btn" title="Menú Principal">
+                <i class="fas fa-home"></i>
+            </button>
+            <div id="roleCapsule" class="role-capsule">
+                <i class="fas fa-shield-halved"></i>
+                <span id="roleText">SUPERVISOR</span>
+            </div>
+        </div>
+        <button id="logoutBtn" class="logout-btn-circular" title="CERRAR SESIÓN">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </div>
+
+    <!-- Login Module (Redesigned) -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-card">
+            <i class="fas fa-microchip login-logo"></i>
+            <h2>SISTEMA DE AUTENTICACIÓN</h2>
+            <div class="login-body">
+                <div class="form-group">
+                    <label>ID DE ACCESO</label>
+                    <input type="text" id="userInput" placeholder="Supervisor / Prov" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>CLAVE DE SEGURIDAD</label>
+                    <input type="password" id="passInput" placeholder="••••••••">
+                </div>
+                <div id="loginErrorMsg" class="error-inline"
+                    style="color:var(--danger-color); font-family:var(--font-sub); font-size:0.75rem; margin-bottom:15px; display:none;">
+                    CREDENCIALES INVÁLIDAS — REINTENTE
+                </div>
+                <button id="btnLogin" class="btn-submit">
+                    INICIAR SESIÓN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Wrapper (1080p Optimized) -->
+    <div class="wrapper" id="appWrapper" style="display:none;">
+
+        <!-- OPERARIO UNIFIED DASHBOARD -->
+        <div id="dashboardContainer" class="operario-side-layout" style="display:none;">
+
+            <!-- RIGHT: INCIDENCES (Embedded Sidebar Style) -->
+            <div class="incident-card" id="incidentPanel" style="max-width:450px; width:40%;">
+                <h2><i class="fas fa-exclamation-circle"></i> reporte de incidencia</h2>
+
+                <div class="form-group">
+                    <label>FECHA INCIDENCIA</label>
+                    <input type="date" id="incDate">
+                </div>
+
+                <div class="form-group">
+                    <label>PROVEEDOR afectado (Seleccionar Cita)</label>
+                    <div class="autocomplete-wrapper" id="incAutocompleteWrapper">
+                        <input type="text" id="incProveedorSearch" placeholder="Escriba nombre del proveedor..."
+                            autocomplete="off">
+                        <div id="incAutocompleteResults" class="autocomplete-dropdown" style="display:none;"></div>
+                        <!-- Hidden fields to store selection metadata -->
+                        <input type="hidden" id="selectedIdCita" value="">
+                        <input type="hidden" id="selectedProvName" value="">
+                        <input type="hidden" id="selectedHCita" value="">
+                        <input type="hidden" id="selectedHFinCita" value="">
+                        <input type="hidden" id="selectedProvCodigo" value="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de incidencia</label>
+                    <select id="incTipo">
+                        <option value="">Cargando...</option>
+                    </select>
+                </div>
+
+                <div id="incTimeFields"
+                    style="border-top:1px solid rgba(255,10,90,0.2); padding-top:20px; margin-top:10px;">
+                    <div class="form-group">
+                        <label>El proveedor llego tarde? colocar Hora de Llegada (OPCIONAL: SOLO EN CASO DE
+                            ATRASO)</label>
+                        <input type="time" id="incHoraLlegada">
+                    </div>
+                </div>
+
+                <div style="margin-top:30px; display:flex; justify-content:center;">
+                    <button id="btnSendIncident" class="btn-send-incident"
+                        style="width:100%; max-width:280px; padding:15px; font-weight:700; letter-spacing:2px;">ENVIAR
+                        REPORTE</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panels-layout" id="panelsLayout" style="display:none;">
+            <!-- LEFT: REGISTRATION -->
+            <div class="agenda-container" id="agendaContainer">
+                <h3
+                    style="font-family:var(--font-head); font-size:0.85rem; margin-bottom:25px; color:var(--primary-color); letter-spacing:1px;">
+                    <i class="fas fa-plus-square"></i> NUEVO REGISTRO DE CITA
+                </h3>
+                <form id="agendaForm" autocomplete="off">
+                    <div class="form-group">
+                        <label><i class="fas fa-truck"></i> PROVEEDOR</label>
+                        <div class="autocomplete-wrapper" id="mainProveedorAutocompleteWrapper">
+                            <input type="text" id="proveedor" placeholder="Buscar proveedor..." required
+                                autocomplete="off">
+                            <div id="mainAutocompleteResults" class="autocomplete-dropdown" style="display:none;"></div>
+                            <input type="hidden" id="mainSelectedProvCode" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="tipoDestinoGroup">
+                        <label><i class="fas fa-map-marker-alt"></i> TIPO DE DESTINO</label>
+                        <select id="tipo_destino">
+                            <option value="CDS">CDS — Centro de Distribución</option>
+                            <option value="DP">DP — Distribución Primaria</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="puertaManualGroup">
+                        <label><i class="fas fa-door-open"></i> ASIGNAR PUERTA (MANUAL)</label>
+                        <select id="puerta_manual">
+                            <option value="auto">Auto — Asignar automáticamente</option>
+                            <option value="Puerta 1">Puerta 1</option>
+                            <option value="Puerta 2">Puerta 2</option>
+                            <option value="Puerta 3">Puerta 3</option>
+                            <option value="Puerta 4">Puerta 4</option>
+                            <option value="Puerta 5">Puerta 5</option>
+                            <option value="Puerta 6">Puerta 6</option>
+                            <option value="Puerta 7">Puerta 7</option>
+                            <option value="Puerta 8">Puerta 8</option>
+                            <option value="Puerta 9">Puerta 9</option>
+                            <option value="Puerta 10">Puerta 10</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i> FECHA de CITA</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+
+                    <div class="row" style="display:flex; gap:20px;">
+                        <div class="form-group" style="flex:1;">
+                            <label><i class="fas fa-clock"></i> HORA INICIO</label>
+                            <select id="hora_inicio" required>
+                                <option value="" disabled selected>Seleccione</option>
+                                <option value="07:30">07:30</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label><i class="fas fa-clock"></i> HORA FIN</label>
+                            <select id="hora_fin" required>
+                                <option value="" disabled selected>Seleccione</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="display:flex; gap:20px;">
+                        <div class="form-group" style="flex:1;">
+                            <label><i class="fas fa-boxes"></i> CANTIDAD DE SKU</label>
+                            <input type="number" id="cant_sku" min="0" placeholder="Ej: 10" required>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label><i class="fas fa-box"></i> CANTIDAD DE CAJAS</label>
+                            <input type="number" id="cant_cajas" min="0" placeholder="Ej: 50" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnSubmit" class="btn-submit">
+                        AGENDAR CITA
+                    </button>
+                </form>
+            </div>
+
+            <!-- RIGHT: MANAGEMENT COLUMN -->
+            <div class="management-column" id="cancelContainer">
+
+                <div class="mgmt-list-container">
+                    <h3
+                        style="font-family:var(--font-head); font-size:0.8rem; margin-bottom:15px; color:var(--primary-color); letter-spacing:1px; border-bottom:1px solid rgba(0,255,255,0.1); padding-bottom:10px;">
+                        <i class="fas fa-user-gear"></i> MÓDULO DE RECEPCIÓN & LOGÍSTICA
+                    </h3>
+
+                    <div class="form-group" style="margin-bottom:15px;">
+                        <label style="font-size:0.55rem; opacity:0.6;">SELECCIONAR FECHA PARA GESTIÓN</label>
+                        <input type="date" id="supMgmtDate"
+                            style="padding:10px; font-size:0.85rem; border-color:rgba(0,255,255,0.2);">
+                    </div>
+
+                    <div id="supMgmtResults"
+                        style="display:flex; flex-direction:column; gap:10px; max-height:500px; overflow-y:auto; padding-right:5px;">
+                        <!-- List of appointments for the day -->
+                        <div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.7rem;">
+                            Seleccione una fecha para ver citas.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="hologramModal" class="hologram-modal" style="display: none;">
+        <div class="hologram-content"
+            style="background:var(--panel-bg); border:1px solid var(--primary-color); box-shadow:var(--glow-cyan); width:350px; padding:40px; border-radius:4px; text-align:center;">
+            <i class="fas fa-check-circle" style="font-size:3rem; color:var(--primary-color); margin-bottom:20px;"></i>
+            <h2 style="font-family:var(--font-head); font-size:1rem; margin-bottom:10px;">OPERACIÓN EXITOSA</h2>
+            <p id="hologramMsg" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:25px;"></p>
+            <button id="hologramCloseBtn"
+                style="width:100%; padding:12px; background:var(--primary-color); color:var(--bg-main); border:none; cursor:pointer; font-weight:700;">REGRESAR</button>
+        </div>
+    </div>
+
+    <!-- SYSTEM ALERT MODAL (Formerly Global Alert) -->
+    <div id="errorModal" class="hologram-modal" style="display: none;">
+        <div class="hologram-content"
+            style="background:var(--panel-bg); border:1px solid var(--danger-color); box-shadow:var(--glow-red); width:350px; padding:40px; border-radius:4px; text-align:center;">
+            <i class="fas fa-exclamation-triangle"
+                style="font-size:3rem; color:var(--danger-color); margin-bottom:20px;"></i>
+            <h2 id="errorModalTitle"
+                style="font-family:var(--font-head); font-size:0.9rem; margin-bottom:10px; color:var(--danger-color);">
+                ALERTA DE SISTEMA</h2>
+            <p id="errorModalMsg" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:25px;"></p>
+            <div id="errorBtnYesNo" style="display:none; gap:10px; width:100%;">
+                <button id="errorBtnYes"
+                    style="flex:1; padding:12px; background:var(--danger-color); color:white; border:none; cursor:pointer; font-weight:700;">SÍ</button>
+                <button id="errorBtnNo"
+                    style="flex:1; padding:12px; background:transparent; border:1px solid var(--danger-color); color:var(--danger-color); cursor:pointer; font-weight:700;">NO</button>
+            </div>
+            <button id="errorBtnOk"
+                style="width:100%; padding:12px; background:var(--danger-color); color:white; border:none; cursor:pointer; font-weight:700;">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

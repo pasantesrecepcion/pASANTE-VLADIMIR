@@ -1,0 +1,838 @@
+/* =========================================================
+   CORE B100: SUPREME UI/UX RESTORATION
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@500;700&family=Inter:wght@300;400;600&display=swap');
+
+:root {
+    --bg-main: #06090f;
+    --panel-bg: rgba(10, 15, 25, 0.95);
+    --primary-color: #00ffff;
+    /* Cyan Neon */
+    --danger-color: #ff003c;
+    /* Red Neon Standard */
+    --incident-red: #ff073a;
+    /* Deep Cyber Red */
+
+    --glow-cyan: 0 0 15px rgba(0, 255, 255, 0.4);
+    --glow-red: 0 0 15px rgba(255, 7, 58, 0.4);
+    --glow-orange: 0 0 15px rgba(255, 140, 0, 0.4);
+
+    --text-main: #e2e8f0;
+    --text-muted: #8fa3b8;
+    --input-bg: #0b111b;
+
+    --font-head: 'Orbitron', sans-serif;
+    --font-sub: 'Rajdhani', sans-serif;
+}
+
+[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --panel-bg: rgba(255, 255, 255, 0.98);
+    --primary-color: #0ea5e9;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --input-bg: #f1f5f9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    /* Crucial for 3D effect */
+}
+
+/* CYBER-3D GRID BACKGROUND */
+.grid-background {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200vw;
+    height: 200vh;
+    background-image:
+        linear-gradient(var(--primary-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--primary-color) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center;
+    transform: translate(-50%, -50%) rotateX(60deg);
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% {
+        background-position: center 0;
+    }
+
+    100% {
+        background-position: center 50px;
+    }
+}
+
+#particles-js {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.1;
+}
+
+/* =========================================================
+   LOGIN MODULE (Perfectly Centered & Cyan Focused)
+   ========================================================= */
+.login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-main);
+    backdrop-filter: blur(10px);
+}
+
+.login-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--primary-color);
+    box-shadow: var(--glow-cyan);
+    border-radius: 4px;
+    padding: 60px;
+    width: 450px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.login-logo {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 24px;
+    filter: drop-shadow(0 0 10px var(--primary-color));
+}
+
+.login-card h2 {
+    font-family: var(--font-head);
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+.login-card label {
+    color: var(--primary-color) !important;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+.login-card input {
+    background: var(--input-bg);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    text-align: center;
+}
+
+.login-card input::placeholder {
+    color: rgba(0, 255, 255, 0.3) !important;
+}
+
+.login-card .btn-submit {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    margin-top: 15px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.login-card .btn-submit:hover {
+    background: var(--primary-color);
+    color: var(--bg-main);
+    box-shadow: 0 0 30px var(--primary-color);
+}
+
+/* =========================================================
+   HEADER: SUPREME CEDIS CONTROL
+   ========================================================= */
+.header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 60px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.main-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    color: #fff;
+    /* Pure White as requested */
+    text-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* Control Cluster Fixing Redirection */
+.header-controls {
+    pointer-events: none;
+    /* Inherited from plan, but handled via child pointers */
+}
+
+/* Role Identity Capsule (Left) */
+.role-capsule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 243, 255, 0.1);
+    border: 1px solid rgba(0, 243, 255, 0.4);
+    padding: 6px 18px;
+    border-radius: 50px;
+    color: var(--primary-color);
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.1);
+}
+
+.role-capsule i {
+    font-size: 0.9rem;
+}
+
+/* Circular Buttons (Right) */
+.logout-btn-circular {
+    background: rgba(255, 0, 60, 0.15);
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    pointer-events: auto;
+}
+
+.logout-btn-circular:hover {
+    background: var(--danger-color);
+    color: #fff;
+    box-shadow: 0 0 15px var(--danger-color);
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* =========================================================
+   MAIN APP WRAPPER (1080p Optimized)
+   ========================================================= */
+.wrapper {
+    position: relative;
+    z-index: 2;
+    width: 95%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    /* Reduced to avoid overflow */
+}
+
+.panels-layout {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+/* Containers */
+.agenda-container {
+    flex: 2;
+    /* Increased to give more space */
+    background: var(--panel-bg);
+    border: 1px solid var(--primary-color);
+    box-shadow: var(--glow-cyan);
+    border-radius: 4px;
+    padding: 20px;
+    /* Reduced for compactness */
+    backdrop-filter: blur(10px);
+}
+
+.management-column {
+    flex: 1;
+    max-width: 320px;
+    /* Reduced by ~25% to be more compact as requested */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Tighter gap */
+}
+
+/* NEW: Management List Design */
+.mgmt-list-container {
+    background: var(--panel-bg);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mgmt-row {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid var(--text-muted);
+    padding: 8px 12px;
+    /* Reduced for compactness */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.mgmt-row:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: scale(1.02);
+}
+
+.mgmt-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mgmt-name {
+    font-size: 0.7rem;
+    /* Reduced for compactness */
+    font-weight: 700;
+    color: var(--primary-color);
+    font-family: var(--font-head);
+    text-transform: uppercase;
+}
+
+.mgmt-meta {
+    font-size: 0.55rem;
+    /* Reduced for compactness */
+    color: var(--text-muted);
+}
+
+.mgmt-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Reversible Status Buttons */
+.btn-status {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-status.active-oc {
+    background: rgba(0, 255, 0, 0.2);
+    border-color: #00ff00;
+    color: #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.btn-status.active-rec {
+    background: rgba(0, 255, 255, 0.2);
+    border-color: #00ffff;
+    color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.btn-status.active-can {
+    background: rgba(255, 0, 60, 0.2);
+    border-color: #ff003c;
+    color: #ff003c;
+    box-shadow: 0 0 10px rgba(255, 0, 60, 0.3);
+}
+
+.btn-status:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+/* Status Stripes */
+.row-agendado {
+    border-left-color: #EAB308;
+}
+
+/* Yellow */
+.row-oc {
+    border-left-color: #10B981;
+}
+
+/* Green */
+.row-recepcionado {
+    border-left-color: #3B82F6;
+}
+
+/* Blue */
+.row-cancelado {
+    border-left-color: #EF4444;
+}
+
+/* Red */
+
+/* =========================================================
+   COMPONENTS & FEEDBACK
+   ========================================================= */
+.form-group {
+    margin-bottom: 18px;
+}
+
+/* Improved Spacing */
+label {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-sub);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    /* Pure White as requested */
+    margin-bottom: 10px;
+    opacity: 0.95;
+}
+
+label i {
+    font-size: 0.9rem;
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+input,
+select {
+    width: 100%;
+    background: var(--input-bg);
+    color: var(--primary-color) !important;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 4px;
+    padding: 14px;
+    font-size: 0.95rem;
+    font-family: var(--font-sub);
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+/* Dropdown Legibility */
+select option {
+    background: #0b111b;
+    color: #00ffff;
+}
+
+/* Buttons Animation */
+.btn-submit,
+.btn-management-sec,
+.btn-management-warning {
+    width: 100%;
+    padding: 12px;
+    border-radius: 4px;
+    /* Reduced padding */
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: var(--font-sub);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* HOME BUTTON */
+.home-btn {
+    background: rgba(10, 15, 25, 0.4);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    width: 44px;
+    height: 44px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: auto;
+}
+
+.home-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 0 15px var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.btn-submit {
+    background: rgba(0, 243, 255, 0.05);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 10px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px var(--primary-color);
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.btn-management-sec {
+    background: transparent;
+    border: 2px solid var(--danger-color);
+    color: var(--danger-color);
+    border-radius: 8px;
+}
+
+.btn-management-sec:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--danger-color);
+    background: var(--danger-color);
+    color: white;
+}
+
+.btn-management-warning {
+    background: transparent;
+    border: 2px solid var(--warning-color);
+    color: var(--warning-color);
+    border-radius: 8px;
+}
+
+.btn-management-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--warning-color);
+    background: var(--warning-color);
+    color: white;
+}
+
+/* Provider View: Centered & Sharp */
+.provider-mode #panelsLayout {
+    justify-content: center;
+}
+
+.provider-mode #agendaContainer {
+    max-width: 600px;
+    flex: none;
+    padding: 50px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Modals Center & Blur */
+.hologram-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: none;
+    /* Controlled by JS */
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+}
+
+.hologram-content {
+    animation: modalSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* EOF */
+/* Autocomplete Styles */
+.autocomplete-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.autocomplete-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: var(--panel-bg);
+    border: 1px solid var(--primary-color);
+    box-shadow: var(--glow-cyan);
+    border-radius: 4px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 10001;
+    backdrop-filter: blur(10px);
+}
+
+.autocomplete-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+    transition: 0.2s;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.autocomplete-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+}
+
+.autocomplete-item strong {
+    color: var(--primary-color);
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+}
+
+.autocomplete-item .meta-tag {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    width: fit-content;
+}
+
+.tag-scheduled {
+    background: rgba(0, 255, 255, 0.2);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.tag-master {
+    background: rgba(226, 232, 240, 0.1);
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+}
+
+.autocomplete-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.autocomplete-dropdown::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+/* =========================================================
+   INCIDENT MODULE DESIGN (Cyber-Red Version)
+   ========================================================= */
+.incident-btn {
+    background: rgba(255, 7, 58, 0.1);
+    border: 1px solid var(--incident-red);
+    color: var(--incident-red);
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-head);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    pointer-events: auto;
+}
+
+.incident-btn:hover {
+    background: var(--incident-red);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 7, 58, 0.5);
+    transform: translateY(-2px);
+}
+
+.incident-card {
+    background: rgba(15, 5, 5, 0.98);
+    border: 1px solid var(--incident-red);
+    border-top: 4px solid var(--incident-red);
+    /* Industrial accent */
+    box-shadow: 0 0 30px rgba(255, 7, 58, 0.2);
+    width: 100%;
+    max-width: 400px;
+    /* Reduced for stylized look */
+    padding: 35px;
+    border-radius: 4px;
+    position: relative;
+    animation: modalSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.incident-card h2 {
+    color: var(--incident-red);
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.incident-card .form-group label {
+    color: var(--incident-red) !important;
+    opacity: 0.8;
+}
+
+.incident-card input,
+.incident-card select,
+.incident-card textarea {
+    border-color: rgba(255, 7, 58, 0.3);
+    color: #fff !important;
+}
+
+.incident-card input:focus,
+.incident-card select:focus {
+    border-color: var(--incident-red);
+    box-shadow: 0 0 15px rgba(255, 7, 58, 0.2);
+}
+
+.btn-send-incident {
+    width: 100%;
+    padding: 15px;
+    background: var(--incident-red);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-send-incident:hover {
+    box-shadow: 0 0 25px rgba(255, 7, 58, 0.6);
+    filter: brightness(1.2);
+}
+
+
+/* =========================================================
+   SYMMETRICAL GRID LAYOUT (Operario View Centered)
+   ========================================================= */
+.operario-side-layout,
+#dashboardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Center horizontally and vertically */
+    width: 100%;
+    min-height: 70vh;
+    /* Takes most of the screen */
+    margin: 20px auto;
+    padding: 20px;
+    animation: fadeIn 0.6s ease;
+}
+
+.incident-card {
+    background: rgba(15, 5, 5, 0.98);
+    border: 1px solid var(--incident-red);
+    border-top: 4px solid var(--incident-red);
+    box-shadow: 0 0 40px rgba(255, 7, 58, 0.3);
+    width: 100%;
+    max-width: 500px !important;
+    /* Slightly wider for the centered view */
+    padding: 35px;
+    border-radius: 8px;
+    position: relative;
+    animation: modalSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+}
+
+/* Specific Neons */
+.operario-side-layout .glass-panel {
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+}
+
+.operario-side-layout .incident-card {
+    border: 1px solid var(--incident-red);
+    box-shadow: 0 0 25px rgba(255, 7, 58, 0.1);
+}
+
+/* Ensure system alert is NEVER visible by default */
+#errorModal {
+    display: none !important;
+}
+
+#errorModal[style*="display: flex"] {
+    display: flex !important;
+}

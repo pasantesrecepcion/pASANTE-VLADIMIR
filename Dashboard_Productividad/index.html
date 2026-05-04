@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High-End LPN Leaderboard - 50 Inch Edition</title>
+  <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+
+<body>
+  <button id="btnHome" class="home-btn" title="Ir al Menú Principal">
+    <i class="fas fa-home"></i>
+  </button>
+  <div id="particles-js"></div>
+  <div class="bg-layer"></div>
+
+  <!-- Animated Seamless Deep Blue Ocean Waves -->
+  <div class="ocean">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+  </div>
+
+  <!-- Summary Boxes Stacked Vertically Right -->
+  <div class="summary-container">
+    <div class="summary-box">
+      <div class="summary-title">TOTAL LPN</div>
+      <div class="summary-value" id="tot-lpn">0</div>
+    </div>
+    <div class="summary-box">
+      <div class="summary-title">TOTAL SKU</div>
+      <div class="summary-value" id="tot-sku">0</div>
+    </div>
+    <div class="summary-box">
+      <div class="summary-title">TOTAL PROV.</div>
+      <div class="summary-value" id="tot-prov">0</div>
+    </div>
+  </div>
+
+  <!-- Spacer -->
+  <div style="height: 30px;"></div>
+
+  <!-- Aggressive Large Podium -->
+  <div class="podium" id="podium"></div>
+
+  <!-- Infinite Scroll Table for 50-inch screen -->
+  <div class="table-container">
+    <table class="leaderboard-table fixed-header">
+      <thead>
+        <tr class="wavy-header">
+          <th style="width: 15%; text-align: center;" class="giant-header">Posición</th>
+          <th style="width: 25%;">Operador</th>
+          <th style="width: 45%; text-align: center;">Progreso LPN</th>
+          <th style="width: 15%; text-align: right;">% Part.</th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="table-scroll-wrapper">
+      <div class="scroll-content">
+        <table class="leaderboard-table">
+          <tbody id="table-body">
+            <tr>
+              <td colspan="4" style="text-align: center; color: #94a3b8; padding: 2rem; font-size: 2rem;">
+                Initializing Visual Link...</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="leaderboard-table" aria-hidden="true">
+          <tbody id="table-body-clone"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALA OVERLAY -->
+  <div id="gala-overlay" class="hidden">
+    <div id="gala-background"></div>
+    <div id="gala-content"></div>
+  </div>
+
+  <!-- MÓDULO PRODUCTIVIDAD ESTRATÉGICA -->
+  <div id="productivity-overlay" class="hidden">
+    <div class="prod-background"></div>
+    <div class="prod-content">
+
+      <div class="prod-kpi-grid" id="prod-kpis">
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-box-open prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-lpn">0</div>
+          <div class="prod-kpi-label">TOTAL LPN</div>
+        </div>
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-barcode prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-sku">0</div>
+          <div class="prod-kpi-label">SKU ÚNICOS</div>
+        </div>
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-truck prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-prov">0</div>
+          <div class="prod-kpi-label">TOTAL PROVEEDORES</div>
+        </div>
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-tachometer-alt prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-eff-hr">0</div>
+          <div class="prod-kpi-label">EFICIENCIA (LPN/HR)</div>
+        </div>
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-bolt prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-eff-usr">0</div>
+          <div class="prod-kpi-label">EFICIENCIA (LPN/USR)</div>
+        </div>
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-clock prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-hrs">0</div>
+          <div class="prod-kpi-label">HORAS EQUIPO</div>
+        </div>
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-chart-pie prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-mix">0% / 0%</div>
+          <div class="prod-kpi-label">MIX ORIGEN (DP/CDS)</div>
+        </div>
+        <div class="prod-kpi-box prod-static-glow prod-ekg-bg">
+          <i class="fas fa-users prod-kpi-icon"></i>
+          <div class="prod-kpi-val" id="kpi-users">0</div>
+          <div class="prod-kpi-label">USUARIOS ACTIVOS</div>
+        </div>
+      </div>
+
+      <div class="prod-heatmap-wrapper prod-pulse-border">
+        <div class="prod-heatmap-scroll">
+          <table class="prod-heatmap-table" id="prod-heatmap">
+            <thead>
+              <tr id="prod-heatmap-header"></tr>
+            </thead>
+            <tbody id="prod-heatmap-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase 8 Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "formulario-agenda",
+  "version": "1.0.0",
+  "description": "Entorno para trabajar con Supabase",
+  "main": "index.html",
+  "scripts": {
+    "dev": "serve -p 3003",
+    "start": "serve -p 3003"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.103.0",
+    "express": "^5.2.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
